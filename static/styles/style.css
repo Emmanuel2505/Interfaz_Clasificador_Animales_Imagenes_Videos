@@ -133,3 +133,45 @@ a:hover{
     color: #fff;
     background: #0d45a5;
 }
+
+.loader {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.popup {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+    position: absolute;
+    top: -100%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    padding: 30px;
+    background: #33333371;
+    visibility: hidden;
+}
+
+.open-popup{
+    visibility: visible;
+    top: 50%;
+}
+
+.popup p{
+    color: #fff;
+    margin-top: 20Px;
+    margin-bottom: 0;
+}
