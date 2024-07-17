@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Clasificador</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
+        <style>
+            .loader {
+                border: 16px solid #f3f3f3;
+                border-radius: 50%;
+                border-top: 16px solid #3498db;
+                width: 120px;
+                height: 120px;
+                animation: spin 2s linear infinite;
+                display: none;
+                margin: auto;
+            }
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Clasificador de Animales</h1>
+        
+        <form class="conteiner_input" action="/" method="post" enctype="multipart/form-data" onsubmit="showLoader()">
+            <label for="files" class="drop_container" id="dropcontainer">
+                <img class="image" src="{{ url_for('static', filename='images/foto.png') }}">
+                <span class="drop_title">Coloque los archivos .png, .jpg, .jpeg, .mp4 y/o .AVI aquí</span>
+                o
+                <input id="files" class="file" type="file" name="imagefile" accept=".png, .jpg, .jpeg, .mp4, .AVI" multiple>
+            </label>
+            <input class="btn" type="submit" value="Predecir" disabled="true">
+        </form>
+
+        <div class="loader" id="loader"></div>
+
+        {% if download_link %}
+        <div class="box_download">
+            <div class="container_download">
+                <a class="download" href="{{ download_link }}"><img class="image_download" src="{{ url_for('static', filename='images/icons8-descargar-64.png') }}"> Descargar informe</a>
+            </div>
+        </div>
+        {% endif %}
+        <script>
+            const fileInput = document.querySelector('input[name="imagefile"]');
+            const submitButton = document.querySelector('input[type="submit"]');
+            const drop_container = document.getElementById("dropcontainer")
+            const loader = document.getElementById("loader");
+
+            submitButton.disabled = true;
+
+            fileInput.addEventListener('change', () => {
+                if (fileInput.files.length > 0) {
+                    submitButton.disabled = false;
+                } else {
+                    submitButton.disabled = true;
+                }
+            });
+
+            drop_container.addEventListener("dragover", (e) => {
+                e.preventDefault();
+                drop_container.classList.add("drag_active");
+            }, false);
+
+            drop_container.addEventListener("dragleave", () => {
+                drop_container.classList.remove("drag_active");
+            });
+
+            drop_container.addEventListener("drop", (e) => {
+                e.preventDefault();
+                drop_container.classList.remove("drag_active");
+                fileInput.files = e.dataTransfer.files;
+                submitButton.disabled = false;
+            });
+
+            function showLoader() {
+                loader.style.display = "block";
+            }
+        </script>
+    </body>
+</html>

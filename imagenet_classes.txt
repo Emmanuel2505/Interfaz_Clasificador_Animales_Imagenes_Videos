@@ -1,0 +1,5 @@
+0, lycalopex
+1, puma
+2, tapirus
+3, tremarctos
+4, desconocido
